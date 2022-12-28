@@ -47,19 +47,21 @@ namespace Aplikasi_Kontak_dengan_Database
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            // TODO: This line of code loads data into the 'kosnigelDataSet5.kosnigel' table. You can move, or remove it, as needed.
+            this.kosnigelTableAdapter3.Fill(this.kosnigelDataSet5.kosnigel);
+
             dataviewer();
+
         }
 
         private void btnTambah_Click(object sender, EventArgs e)
         {
             try
             {
-
                 conn.Open();
                 OleDbCommand cmd = conn.CreateCommand();
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "insert into kosnigel(NomorKamar, NamaDepan, NamaBelakang, Alamat, Pekerjaan, Telepon)values('" + txtNomorKamar.Text + "', '" + txtNamaDepan.Text + "','" +
-                    txtNamaBelakang.Text + "', '" + txtAlamat.Text + "', '" + txtPekerjaan.Text + "', '" + txtTelepon.Text + "')";
+                cmd.CommandText = "INSERT INTO kosnigel ([Nomor Kamar], [Nama Depan], [Nama Belakang], [Alamat], [Pekerjaan], [Telepon]) VALUES ('" + txtNomorKamar.Text + "','" + txtNamaDepan.Text + "','" + txtNamaBelakang.Text + "','" + txtAlamat.Text + "','" + txtPekerjaan.Text + "','" + txtTelepon.Text + "')";
                 cmd.ExecuteNonQuery();
                 MessageBox.Show("Data Telah Disimpan", "Access Connect", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 conn.Close();
@@ -70,6 +72,7 @@ namespace Aplikasi_Kontak_dengan_Database
                 MessageBox.Show(ex.Message, "Access Connect", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 conn.Close();
             }
+
         }
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
@@ -84,6 +87,7 @@ namespace Aplikasi_Kontak_dengan_Database
             }
         }
 
+       
         private void btnView_Click(object sender, EventArgs e)
         {
             dataviewer();
@@ -107,8 +111,7 @@ namespace Aplikasi_Kontak_dengan_Database
                 conn.Open();
                 OleDbCommand cmd = conn.CreateCommand();
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "update kosnigel set NomorKamar='" + txtNomorKamar.Text + "' where NamaDepan = '" + txtNamaDepan.Text + 
-                    "' and NamaBelakang = '" + txtNamaBelakang.Text +"'";
+                cmd.CommandText = "update kosnigel set [Nomor Kamar] ='" + txtNomorKamar.Text + "' where [Nama Depan] = '" + txtNamaDepan.Text + "' and [Nama Belakang] = '" + txtNamaBelakang.Text +"'";
                 cmd.ExecuteNonQuery();               
                 conn.Close();
                 MessageBox.Show("Data telah diperbarui", "Access Connect", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -125,6 +128,7 @@ namespace Aplikasi_Kontak_dengan_Database
         {
             try
             {
+                dataGridView1.ColumnCount = 6;
                 txtNomorKamar.Text = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
                 txtNamaDepan.Text = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
                 txtNamaBelakang.Text = dataGridView1.SelectedRows[0].Cells[2].Value.ToString();
@@ -146,7 +150,7 @@ namespace Aplikasi_Kontak_dengan_Database
                 conn.Open();
                 OleDbCommand cmd = conn.CreateCommand();
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "delete* from kosnigel where NomorKamar='" + txtNomorKamar.Text + "'";
+                cmd.CommandText = "delete * from kosnigel where [Nomor Kamar] ='" + txtNomorKamar.Text + "'";
                 cmd.ExecuteNonQuery();
                 conn.Close();
                 MessageBox.Show("Data telah dihapus", "Access Connect", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -186,7 +190,7 @@ namespace Aplikasi_Kontak_dengan_Database
                 conn.Open();
                 OleDbCommand cmd = conn.CreateCommand();
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "select * from kosnigel where NomorKamar = '" + txtCari.Text + "' or NamaDepan = '" + txtCari.Text + "' or NamaBelakang = '" + txtCari.Text + "'";
+                cmd.CommandText = "select * from kosnigel where [Nomor Kamar] = '" + txtCari.Text + "' or [Nama Depan] = '" + txtCari.Text + "' or [Nama Belakang] = '" + txtCari.Text + "'";
                 cmd.ExecuteNonQuery();
                 DataTable dt = new DataTable();
                 OleDbDataAdapter dp = new OleDbDataAdapter(cmd);
